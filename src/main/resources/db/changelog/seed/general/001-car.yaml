@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-car
+      author: me
+      runAlways: true
+      runOnChange: true
+      loadUpdateData:
+        primaryKey: id
+        file: data/car.csv
+        relativeToChangelogFile: true
+        separator: ;
+        quotchar: '"'
+        encoding: UTF-8
+        tableName: car
