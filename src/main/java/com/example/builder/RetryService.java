@@ -4,5 +4,5 @@ import java.sql.SQLException;
 
 public interface RetryService {
 
-    String execute() throws SQLException;
+    void execute() throws SQLException;
 }

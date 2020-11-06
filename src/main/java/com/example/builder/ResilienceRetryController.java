@@ -8,12 +8,12 @@ import java.sql.SQLException;
 
 @RestController
 @RequiredArgsConstructor
-public class SpringRetryController {
+public class ResilienceRetryController {
 
-    private final RetryService springRetryService;
+    private final RetryService resilienceRetryService;
 
-    @GetMapping("/spring-retry")
+    @GetMapping("/resilience")
     public void callRetryService() throws SQLException {
-        springRetryService.execute();
+        resilienceRetryService.execute();
     }
 }
