@@ -1,6 +1,5 @@
 package com.example.builder.service.retry;
 
-import com.example.builder.service.retry.RetryService;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
 import io.github.resilience4j.retry.RetryRegistry;
@@ -14,7 +13,9 @@ import java.util.function.Function;
 public class ResilienceRetryService implements RetryService {
 
     public void execute() {
-        RetryConfig config = RetryConfig.custom().maxAttempts(2).build();
+        RetryConfig config = RetryConfig.custom()
+                .retryExceptions(NullPointerException.class)
+                .maxAttempts(2).build();
         RetryRegistry registry = RetryRegistry.of(config);
         Retry retry = registry.retry("my");
         Function<Integer, String> decorated = Retry.decorateFunction(retry, this::recover);
