@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:int="http://www.springframework.org/schema/integration"
+        xmlns:int-http="http://www.springframework.org/schema/integration/http"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/integration/http
+       http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+       http://www.springframework.org/schema/integration
+       http://www.springframework.org/schema/integration/spring-integration.xsd"
+>
+
+    <int:channel id="httpRequestChannel">
+        <int:priority-queue/>
+    </int:channel>
+    <int:channel id="httpReplyChannel"/>
+
+    <int:gateway service-interface="com.example.builder.service.integration.Viewer" id="viewer"
+                 default-request-channel="httpRequestChannel"/>
+
+
+    <int:chain input-channel="httpRequestChannel" output-channel="httpReplyChannel">
+        <int:poller time-unit="SECONDS" fixed-delay="15" max-messages-per-poll="1"/>
+<!--        <int:header-enricher>-->
+<!--            <int:header name="Route" value="route"/>-->
+<!--        </int:header-enricher>-->
+        <int:object-to-json-transformer/>
+        <int-http:outbound-gateway
+                id="httpRequest"
+                url="https://google.com"
+                http-method="GET"
+                expected-response-type="java.lang.String"
+                charset="UTF-8">
+<!--                header-mapper="headerMapper"-->
+        </int-http:outbound-gateway>
+        <int:service-activator ref="pageViewerImpl" method="show"/>
+        <int:splitter/>
+<!--        <int:transformer ref="converter" method="toDomain"/>-->
+    </int:chain>
+
+<!--    <bean id="headerMapper" class="org.springframework.integration.http.support.DefaultHttpHeaderMapper">-->
+<!--        <property name="outboundHeaderNames" value="HTTP_REQUEST_HEADERS, Route"/>-->
+<!--        <property name="userDefinedHeaderPrefix" value=""/>-->
+<!--    </bean>-->
+</beans>
