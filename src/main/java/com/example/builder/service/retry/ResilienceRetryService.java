@@ -1,32 +1,20 @@
 package com.example.builder.service.retry;
 
-import io.github.resilience4j.retry.Retry;
-import io.github.resilience4j.retry.RetryConfig;
-import io.github.resilience4j.retry.RetryRegistry;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.function.Function;
 
 @Slf4j
 @Service
 public class ResilienceRetryService implements RetryService {
 
+    @Retry(name = "backendA", fallbackMethod = "recover")
+    @Override
     public void execute() {
-        RetryConfig config = RetryConfig.custom()
-                .retryExceptions(NullPointerException.class)
-                .maxAttempts(2).build();
-        RetryRegistry registry = RetryRegistry.of(config);
-        Retry retry = registry.retry("my");
-        Function<Integer, String> decorated = Retry.decorateFunction(retry, this::recover);
-        try {
-            decorated.apply(3);
-        } catch (RuntimeException e) {
-            log.error("Error after retry " + e.getMessage());
-        }
+        throw new RuntimeException();
     }
 
-    private String recover(int i) {
-        throw new RuntimeException();
+    private void recover(RuntimeException ex) {
+        log.error("Error after retry ");
     }
 }

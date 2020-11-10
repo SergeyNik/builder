@@ -1,3 +1,5 @@
+server:
+  port: 8085
 spring:
   liquibase:
     enabled: true
@@ -14,3 +16,13 @@ spring:
     password: test
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     name: main
+
+resilience4j.retry:
+  instances:
+    backendA:
+      maxRetryAttempts: 5
+      waitDuration: 3s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+      retryExceptions:
+        - java.lang.RuntimeException
