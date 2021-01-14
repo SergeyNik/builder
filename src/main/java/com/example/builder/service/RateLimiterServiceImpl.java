@@ -1,34 +1,26 @@
 package com.example.builder.service;
 
 import io.github.resilience4j.ratelimiter.RateLimiter;
-import io.github.resilience4j.ratelimiter.RateLimiterConfig;
 import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.time.Duration;
-import java.util.function.Supplier;
+import org.testcontainers.shaded.com.google.common.base.Stopwatch;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RateLimiterServiceImpl implements RateLimiterService {
+
+    private final RateLimiterRegistry rateLimiter;
 
     @Override
     public void execute() {
-        RateLimiterConfig config = RateLimiterConfig.custom()
-                .limitForPeriod(1)
-                .limitRefreshPeriod(Duration.ofSeconds(1))
-                .timeoutDuration(Duration.ofSeconds(1))
-                .build();
-        RateLimiterRegistry rateLimiterRegistry = RateLimiterRegistry.of(config);
-
-        RateLimiter rateLimiterWithCustomConfig = rateLimiterRegistry
-                .rateLimiter("name2", config);
-
-        Supplier<String> hi = RateLimiter.decorateSupplier(rateLimiterWithCustomConfig, () -> "hi");
-        log.info("rate-limiter: {}", hi.get());
-        log.info("rate-limiter: {}", hi.get());
-        log.info("rate-limiter: {}", hi.get());
-        log.info("rate-limiter: {}", hi.get());
+        RateLimiter first = rateLimiter.rateLimiter("first");
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String str = first.executeSupplier(() -> "finish");
+        log.info("result: {}", str);
+        stopwatch.stop();
+        log.info("time = {}", stopwatch.toString());
     }
 }

@@ -3,6 +3,8 @@ databaseChangeLog:
   # Migrate db
   - include:
       file: db/changelog/schema/001-init.sql
+  - include:
+      file: db/changelog/schema/002-add-car-created_at.sql
 
   # Insert test data
   - include:
