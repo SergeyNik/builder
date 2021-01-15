@@ -5,9 +5,11 @@ spring:
     enabled: true
     contexts: test
   jpa:
+    show-sql: true
     properties:
-      hibernate.show_sql: false
-      hibernate:format_sql: false
+      hibernate:
+        show_sql: true
+        format_sql: true
     open-in-view: false
     hibernate.ddl-auto: none
   datasource:

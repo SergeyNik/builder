@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-document
+      author: me
+      runAlways: true
+      runOnChange: true
+      loadUpdateData:
+        primaryKey: id
+        file: data/document.csv
+        relativeToChangelogFile: true
+        separator: ;
+        quotchar: '"'
+        encoding: UTF-8
+        tableName: document

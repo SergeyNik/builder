@@ -18,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Getter
@@ -28,8 +27,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
-@Table(name = "car")
-public class Car {
+@Table(name = "owner")
+public class Owner {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -40,15 +39,8 @@ public class Car {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "cost")
-    private Integer cost;
-
-    @Column(name = "created_at")
-    private ZonedDateTime createdAt;
-
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Owner owner;
-
+    @JoinColumn(nullable = false)
+    private Document document;
 }

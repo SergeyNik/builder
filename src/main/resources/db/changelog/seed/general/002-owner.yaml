@@ -1,14 +1,14 @@
 databaseChangeLog:
   - changeSet:
-      id: 001-car
+      id: 002-owner
       author: me
       runAlways: true
       runOnChange: true
       loadUpdateData:
         primaryKey: id
-        file: data/car.csv
+        file: data/owner.csv
         relativeToChangelogFile: true
         separator: ;
         quotchar: '"'
         encoding: UTF-8
-        tableName: car
+        tableName: owner
