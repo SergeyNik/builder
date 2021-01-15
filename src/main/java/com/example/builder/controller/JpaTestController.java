@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -39,5 +40,11 @@ public class JpaTestController {
             log.info("Owner is: {}", car.getOwner()); // throw
             log.info("Owner name is: {}", car.getOwner().getName()); // throw
         }
+    }
+
+    @GetMapping("/car-document")
+    public void findDocId() {
+        UUID documentId = carRepository.findDocumentId();
+        log.info("DocId is: {}", documentId);
     }
 }
