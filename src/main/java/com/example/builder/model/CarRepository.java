@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface CarRepository extends JpaRepository<Car, UUID> {
 
     Car findFirstByOrderByCreatedAtAsc();
+
+    Car findTopByNameOrderByCreatedAtDesc(String name);
 }
