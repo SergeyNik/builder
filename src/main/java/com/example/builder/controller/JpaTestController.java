@@ -1,7 +1,7 @@
 package com.example.builder.controller;
 
 import com.example.builder.model.Car;
-import com.example.builder.model.CarRepository;
+import com.example.builder.service.CarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,23 +15,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JpaTestController {
 
-    private final CarRepository carRepository;
+    private final CarService carService;
 
     @GetMapping("/car-by-asc")
     public void getCarByAsc() {
-        Car car = carRepository.findFirstByOrderByCreatedAtAsc();
-        log.info("My cat is: {}", car);
-    }
-
-    @GetMapping("/cars-by-asc")
-    public void getCarsByAsc() {
-        Car car = carRepository.findFirstByOrderByCreatedAtAsc();
+        Car car = carService.findFirstByOrderByCreatedAtAsc();
         log.info("My cat is: {}", car);
     }
 
     @GetMapping("/cars")
     public void getCars() { // N + 1
-        List<Car> cars = carRepository.findAll();
+        List<Car> cars = carService.findAll();
         for (Car car : cars) {
             log.info("My car is: {}", car.getCost());
             log.info("Owner id is: {}", car.getOwner().getId());
@@ -42,9 +36,20 @@ public class JpaTestController {
         }
     }
 
+    @GetMapping("/fetched-cars")
+    public void getFetchedCars() {
+        List<Car> cars = carService.findFetchedAll();
+        for (Car car : cars) {
+            log.info("My car is: {}", car.getCost());
+            log.info("Owner id is: {}", car.getOwner().getId());
+            log.info("Owner is: {}", car.getOwner());
+            log.info("Owner name is: {}", car.getOwner().getName());
+        }
+    }
+
     @GetMapping("/car-document")
     public void findDocId() {
-        UUID documentId = carRepository.findDocumentId();
+        UUID documentId = carService.findDocumentId();
         log.info("DocId is: {}", documentId);
     }
 }

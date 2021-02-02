@@ -5,7 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -23,7 +24,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -47,8 +47,18 @@ public class Car {
     private ZonedDateTime createdAt;
 
     @NotNull
+    @Fetch(value = FetchMode.JOIN)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Owner owner;
 
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
