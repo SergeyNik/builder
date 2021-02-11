@@ -20,8 +20,13 @@ public class ResilienceController {
         resilienceRetryService.execute();
     }
 
+    @GetMapping("/resilience-retry2")
+    public void callRetryService2() {
+        resilienceRetryService.executeRetryRegistry();
+    }
+
     @GetMapping("/rate-limiter")
-    public void callRateLimiterService() throws SQLException {
+    public void callRateLimiterService() {
         rateLimiterService.execute();
     }
 }

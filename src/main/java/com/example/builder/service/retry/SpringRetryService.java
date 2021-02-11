@@ -22,6 +22,11 @@ public class SpringRetryService implements RetryService {
         throw new SQLException();
     }
 
+    @Override
+    public void executeRetryRegistry() {
+        throw new UnsupportedOperationException();
+    }
+
     @Recover
     public void recover(SQLException t) {
         log.info("Service recovering");
