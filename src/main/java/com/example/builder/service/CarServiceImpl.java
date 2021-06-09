@@ -2,6 +2,7 @@ package com.example.builder.service;
 
 import com.example.builder.model.Car;
 import com.example.builder.repository.CarRepository;
+import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car findFirstByOrderByCreatedAtAsc() {
         return carRepository.findFirstByOrderByCreatedAtAsc();
+    }
+
+    @Override
+    public Iterable<Car> findByOrderByCreated(Predicate predicate) {
+        return carRepository.findAll(predicate);
     }
 
     @Override
