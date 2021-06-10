@@ -28,3 +28,13 @@ resilience4j.retry:
       exponentialBackoffMultiplier: 2
       retryExceptions:
         - java.lang.RuntimeException
+
+management:
+  endpoint:
+    health.show-details: always
+  endpoints:
+    web:
+      base-path: /info
+      exposure:
+        include: '*'
+        exclude: ''
