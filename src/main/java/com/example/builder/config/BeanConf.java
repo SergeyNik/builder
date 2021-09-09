@@ -19,9 +19,11 @@ import org.apache.http.protocol.HTTP;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.Duration;
 
+@EnableScheduling
 @Configuration
 public class BeanConf {
 
