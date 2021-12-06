@@ -62,7 +62,6 @@ public class BeanConf {
         return RetryRegistry.of(ImmutableMap.of(
                 "retry", RetryConfig.custom()
                         .maxAttempts(5)
-                        .waitDuration(Duration.ofSeconds(5))
                         .retryExceptions(RuntimeException.class)
                         .intervalFunction(IntervalFunction.ofExponentialBackoff(10_000, 3, 30_000))
                         .build()
