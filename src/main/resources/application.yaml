@@ -38,3 +38,11 @@ management:
       exposure:
         include: '*'
         exclude: ''
+
+jasypt:
+  encryptor:
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    algorithm: PBEWithMD5AndDES
+
+application:
+  pass: ENC(HW2w0C4L+3iK0+52xhZesA==)
