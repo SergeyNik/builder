@@ -44,5 +44,12 @@ jasypt:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
     algorithm: PBEWithMD5AndDES
 
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
 application:
   pass: ENC(HW2w0C4L+3iK0+52xhZesA==)
+  name: @project.artifactId@
+  version: @project.version@

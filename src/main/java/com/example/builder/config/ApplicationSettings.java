@@ -12,5 +12,6 @@ import org.springframework.stereotype.Component;
 public class ApplicationSettings {
 
     private String pass;
-
+    private String name;
+    private String version;
 }
