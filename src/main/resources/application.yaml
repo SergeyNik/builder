@@ -1,6 +1,15 @@
 server:
   port: 8085
+springfox:
+  documentation:
+    auto-startup: false
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    contentnegotiation:
+      favor-parameter: true
+    log-request-details: true
   liquibase:
     enabled: true
     contexts: test
